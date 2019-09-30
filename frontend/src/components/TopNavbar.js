@@ -1,0 +1,22 @@
+import React from 'react';
+import { Navbar, Nav, NavItem } from 'react-bootstrap/lib';
+
+function TopNavbar() {
+  return (
+    <Navbar inverse fixedTop>
+      <Navbar.Header>
+        <Navbar.Brand>
+          <a href="/">SOCOPEC-APP</a>
+        </Navbar.Brand>
+        <Navbar.Toggle />
+      </Navbar.Header>
+      <Navbar.Collapse>
+        <Nav pullRight>
+          <NavItem href="https://github.com/Quentinprm/SOCOPEC-APP">GITHUB</NavItem>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+  );
+}
+
+export default TopNavbar;
