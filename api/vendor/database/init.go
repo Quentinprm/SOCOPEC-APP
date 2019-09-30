@@ -122,7 +122,7 @@ func Init() (*gorm.DB, error) {
 	if !DB.HasTable(&Status{}){
 		DB.CreateTable(&Status{})
 		Pret := Status {Value: "prêter"}
-		Location := Status{Value: "loue" }
+		Location := Status{Value: "louer" }
 		Demo :=  Status{Value: "démonstration"}
 		DB.Create(&Pret)
 		DB.Create(&Location)
