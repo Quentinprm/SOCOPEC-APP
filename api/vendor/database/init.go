@@ -15,6 +15,58 @@ type Post struct {
 	Message string
 }
 
+type Modele struct{
+	gorm.Model
+	Hauteur float64 
+	Largeur float64
+	Poid float64
+	Puissance int
+}
+
+type UserGroup struct{
+	gorm.Model
+	Group string
+}
+
+type Agence struct{
+	gorm.Model
+	Nom string
+	Addresse string
+	Tel string
+	Fax string
+	Photo []byte
+}
+type Agent struct{
+	gorm.Model
+	Nom string 
+	Prenom string
+	Tel string 
+	Fax string
+	Mobile string
+	User string
+	Password string
+	Group UserGroup
+}
+type Status struct{
+	gorm.Model
+	Value string 
+}
+type Vehicle struct{
+	gorm.Model
+	Modele Modele
+	Date time.Time
+	Agence Agence
+	Status Status
+}
+
+type Photo struct{
+	gorm.Model
+	Data []byte
+	Vehicle Vehicle
+}
+
+
+
 func addDatabase(dbname string) error {
 	// create database with dbname, won't do anything if db already exists
 	DB.Exec("CREATE DATABASE " + dbname)
@@ -45,12 +97,42 @@ func Init() (*gorm.DB, error) {
 	}
 
 	// create table if it does not exist
-	if !DB.HasTable(&Post{}) {
-		DB.CreateTable(&Post{})
+	if DB.HasTable(&Post{}) {
+		DB.Delete(&Post{})
 	}
 
-	testPost := Post{Author: "QuentinPRM", Message: "SOCOPEC-APP is Dope"}
-	DB.Create(&testPost)
+	if !DB.HasTable(&Modele{}){
+		DB.CreateTable(&Modele{})
+	}
 
+	if !DB.HasTable(&UserGroup{}){
+		DB.CreateTable(&UserGroup{})
+		GroupAdmin := UserGroup{Group: "Administrator"}
+		GroupUser := UserGroup{Group: "User"}
+		DB.Create(&GroupAdmin)
+		DB.Create(&GroupUser)
+	}
+
+	if !DB.HasTable(&Agence{}){
+		DB.CreateTable(&Agence{})
+	}
+	if !DB.HasTable(&Agent{}){
+		DB.CreateTable(&Agent{})
+	}
+	if !DB.HasTable(&Status{}){
+		DB.CreateTable(&Status{})
+		Pret := Status {Value: "prêter"}
+		Location := Status{Value: "loue" }
+		Demo :=  Status{Value: "démonstration"}
+		DB.Create(&Pret)
+		DB.Create(&Location)
+		DB.Create(&Demo)
+	}
+	if !DB.HasTable(&Vehicle{}){
+		DB.CreateTable(&Vehicle{})
+	}
+	if !DB.HasTable(&Photo{}){
+		DB.CreateTable(&Photo{})
+	}
 	return DB, err
 }
