@@ -4,68 +4,12 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"time"
+	"log"
+	"database.entity"
 )
 
 var DB *gorm.DB
 var err error
-
-type Post struct {
-	gorm.Model
-	Author  string
-	Message string
-}
-
-type Modele struct{
-	gorm.Model
-	Hauteur float64 
-	Largeur float64
-	Poid float64
-	Puissance int
-}
-
-type UserGroup struct{
-	gorm.Model
-	Group string
-}
-
-type Agence struct{
-	gorm.Model
-	Nom string
-	Addresse string
-	Tel string
-	Fax string
-	Photo []byte
-}
-type Agent struct{
-	gorm.Model
-	Nom string 
-	Prenom string
-	Tel string 
-	Fax string
-	Mobile string
-	User string
-	Password string
-	Group UserGroup
-}
-type Status struct{
-	gorm.Model
-	Value string 
-}
-type Vehicle struct{
-	gorm.Model
-	Modele Modele
-	Date time.Time
-	Agence Agence
-	Status Status
-}
-
-type Photo struct{
-	gorm.Model
-	Data []byte
-	Vehicle Vehicle
-}
-
-
 
 func addDatabase(dbname string) error {
 	// create database with dbname, won't do anything if db already exists
@@ -97,15 +41,50 @@ func Init() (*gorm.DB, error) {
 	}
 
 	// create table if it does not exist
-	if DB.HasTable(&Post{}) {
-		DB.Delete(&Post{})
+	if DB.HasTable(&Modele{}){
+		log.Println("DropTable Modele")
+		DB.DropTable(&Modele{})
 	}
+	if DB.HasTable(&UserGroup{}){
+		log.Println("DropTable UserGroup")
+		DB.DropTable(&UserGroup{})
+	}
+	if DB.HasTable(&Agence{}){
+		log.Println("DropTable Agence")
+		DB.DropTable(&Agence{})
+	}
+	if DB.HasTable(&Identity{}){
+		log.Println("DropTable Identity")
+		DB.DropTable(&Identity{})
+	}
+	if DB.HasTable(&Agent{}){
+		log.Println("DropTable Agent")
+		DB.DropTable(&Agent{})
+	}
+	if DB.HasTable(&Status{}){
+		log.Println("DropTable Status")
+		DB.DropTable(&Status{})
+	}
+	if DB.HasTable(&Vehicle{}){
+		log.Println("DropTable Vehicle")
+		DB.DropTable(&Vehicle{})
+	}
+	if DB.HasTable(&Photo{}){
+		log.Println("DropTable Photo")
+		DB.DropTable(&Photo{})
+	}
+	if DB.HasTable(&Historique{}){
+		log.Println("DropTable Historique")
+		DB.DropTable(&Historique{})
+	}
+
 
 	if !DB.HasTable(&Modele{}){
+		log.Println("CreateTable Modele")
 		DB.CreateTable(&Modele{})
 	}
-
 	if !DB.HasTable(&UserGroup{}){
+		log.Println("CreateTable UserGroup")
 		DB.CreateTable(&UserGroup{})
 		GroupAdmin := UserGroup{Group: "Administrator"}
 		GroupUser := UserGroup{Group: "User"}
@@ -114,12 +93,19 @@ func Init() (*gorm.DB, error) {
 	}
 
 	if !DB.HasTable(&Agence{}){
+		log.Println("CreateTable Agence")
 		DB.CreateTable(&Agence{})
 	}
+	if(!DB.HasTable(&Identity{})){
+		log.Println("CreateTable Identity")
+		DB.CreateTable(&Identity{})
+	}
 	if !DB.HasTable(&Agent{}){
+		log.Println("CreateTable Agent")
 		DB.CreateTable(&Agent{})
 	}
 	if !DB.HasTable(&Status{}){
+		log.Println("CreateTable Status")
 		DB.CreateTable(&Status{})
 		Pret := Status {Value: "prêter"}
 		Location := Status{Value: "louer" }
@@ -129,10 +115,16 @@ func Init() (*gorm.DB, error) {
 		DB.Create(&Demo)
 	}
 	if !DB.HasTable(&Vehicle{}){
+		log.Println("CreateTable Vehicle")
 		DB.CreateTable(&Vehicle{})
 	}
 	if !DB.HasTable(&Photo{}){
+		log.Println("CreateTable Photo")
 		DB.CreateTable(&Photo{})
+	}
+	if !DB.HasTable(&Historique{}){
+		log.Println("CreateTable Historique")
+		DB.CreateTable(&Historique{})
 	}
 	return DB, err
 }
