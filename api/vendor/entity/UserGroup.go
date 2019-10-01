@@ -1,5 +1,7 @@
-package database.entity
-// Identité 
+package entity
+import (
+	"github.com/jinzhu/gorm"
+)
 type UserGroup struct{
 	gorm.Model
 	Group string

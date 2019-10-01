@@ -1,4 +1,8 @@
-package database.entity
+package entity
+import (
+	"github.com/jinzhu/gorm"
+	"time"
+)
 type Vehicle struct{
 	gorm.Model
 	Date *time.Time

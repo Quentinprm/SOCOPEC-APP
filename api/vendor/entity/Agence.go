@@ -1,4 +1,7 @@
-package database.entity
+package entity
+import (
+	"github.com/jinzhu/gorm"
+)
 type Agence struct{
 	gorm.Model
 	Nom string

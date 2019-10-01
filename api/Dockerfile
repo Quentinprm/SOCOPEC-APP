@@ -11,8 +11,8 @@ COPY . /go/src/github.com/user/SOCOPEC-APP/api
 WORKDIR /go/src/github.com/user/SOCOPEC-APP/api
 
 # added vendor services will need to be included here
+RUN go get ./vendor/entity
 RUN go get ./vendor/database
-
 RUN go get ./
 RUN go build
 

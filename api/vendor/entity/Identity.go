@@ -1,4 +1,7 @@
-package database.entity
+package entity
+import (
+	"github.com/jinzhu/gorm"
+)
 type Identity struct{
 	gorm.Model
 	User string `gorm:"type:varchar(50);unique_index"`

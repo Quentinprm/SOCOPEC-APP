@@ -1,6 +1,7 @@
 package main
 
 import (
+	"entity"
 	"database"
 	"encoding/json"
 	"fmt"
@@ -94,7 +95,7 @@ import (
 //}
 func showStatusHandler(w http.ResponseWriter, r*http.Request, ps httprouter.Params){
 	setCors(w)
-	var status database.Status
+	var status entity.Status
 	database.DB.Where("ID = ?",ps.ByName("statusId")).First(&status)
 	res,err := json.Marshal(status)
 	if err != nil {
@@ -105,7 +106,7 @@ func showStatusHandler(w http.ResponseWriter, r*http.Request, ps httprouter.Para
 }
 func indexStatusHandler(w http.ResponseWriter,r *http.Request, _ httprouter.Params){
 	setCors(w)
-	var status []database.Status
+	var status []entity.Status
 	database.DB.Find(&status)
 	res, err := json.Marshal(status)
 	if err != nil {
