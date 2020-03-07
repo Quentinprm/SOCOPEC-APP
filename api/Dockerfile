@@ -2,17 +2,17 @@ FROM golang
 
 # if left blank app will run with dev settings
 # to build production image run:
-# $ docker build ./api --build-args app_env=production
+# $ docker build ./api --build-args app_env=dev
 ARG app_env
 ENV APP_ENV $app_env
 
-# it is okay to leave user/SOCOPEC-APP as long as you do not want to share code with other libraries
-COPY . /go/src/github.com/user/SOCOPEC-APP/api
-WORKDIR /go/src/github.com/user/SOCOPEC-APP/api
+# it is okay to leave user/GoDoRP as long as you do not want to share code with other libraries
+COPY . /go/src/github.com/user/Socopec/api
+WORKDIR /go/src/github.com/user/Socopec/api
 
 # added vendor services will need to be included here
-RUN go get ./vendor/entity
 RUN go get ./vendor/database
+
 RUN go get ./
 RUN go build
 

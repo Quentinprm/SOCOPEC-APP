@@ -2,7 +2,7 @@ FROM node
 
 # if left blank app will run with dev settings
 # to build production image run:
-# $ docker build ./frontend --build-args app_env=production
+# $ docker build ./frontend --build-args app_env=dev
 ENV NPM_CONFIG_LOGLEVEL warn
 ARG app_env
 ENV NODE_ENV $app_env

@@ -3,7 +3,7 @@ services:
   db:
     build: ./db
     volumes:
-      - ./db/pgdata:/pgdata
+      - pgdata:/pgdata
     ports:
       - "5432"
     environment:
@@ -17,7 +17,7 @@ services:
       args:
         app_env: ${APP_ENV}
     volumes:
-      - ./api:/go/src/github.com/user/SOCOPEC-APP/api
+      - ./api:/go/src/github.com/user/Socopec/api
     ports:
       - "5000:8080"
     links:
@@ -32,3 +32,6 @@ services:
       - ./frontend/src:/frontend/src 
     ports:
       - "3000:3000"
+volumes:
+ pgdata:
+  driver: local

@@ -6,13 +6,13 @@ function TopNavbar() {
     <Navbar inverse fixedTop>
       <Navbar.Header>
         <Navbar.Brand>
-          <a href="/">SOCOPEC-APP</a>
+          <a href="/">GoDoRP</a>
         </Navbar.Brand>
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
         <Nav pullRight>
-          <NavItem href="https://github.com/Quentinprm/SOCOPEC-APP">GITHUB</NavItem>
+          <NavItem href="https://github.com/McMenemy/GoDoRP">GITHUB</NavItem>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
