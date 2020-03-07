@@ -4,6 +4,6 @@ Application web en go , react et postgre
 $ docker-compose build
 $ docker-compose up
 ```
-url du frontend : localhost:3000
-url du backend : localhost:8080
+## url du frontend : localhost:3000
+## url du backend : localhost:5000
 
