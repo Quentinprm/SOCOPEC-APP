@@ -18,8 +18,10 @@ $ docker-compose up
 - PUT		"/user/:userId" avec l’objet User en json dans le body
 - DELETE	"/user/:userId"
 
-- GET		"/car"
+- GET		"/car?statusId&agencyId&model&minYear&maxYear&minPower&maxPower&length&width&height"
 - GET		"/car/:carId"
+- GET   "/car/:carId/carstate
+- GET   "/car/:carId/carstate/:date
 - POST		"/car" avec l’objet car sans pk en json dans le body
 - PUT		"/car/:carId" avec l’objet car en json dans le body
 - DELETE	"/car/:carId"
