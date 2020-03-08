@@ -594,7 +594,7 @@ func main() {
 	//router.GET("/car",indexCarHandler)
 	router.GET("/car",indexCarByParamsHandler)
 	router.GET("/car/:carId/carstate",indexCarStateByCarHandler)
-	router.GET("/car/:carId/carstate:date",indexCarStateByCarAndDateHandler)
+	router.GET("/car/:carId/carstate/:date",indexCarStateByCarAndDateHandler)
 	router.GET("/car/:carId",showCarHandler)
 	router.POST("/car",createCarHandler)
 	router.PUT("/car/:carId",updateCarHandler)
