@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"strings"
 )
 //Agency Handler
 
@@ -206,6 +207,72 @@ func indexCarHandler(w http.ResponseWriter,r *http.Request, _ httprouter.Params)
 	}
 	w.Write(res)
 }
+
+func indexCarByParamsHandler(w http.ResponseWriter,r *http.Request, ps httprouter.Params){
+	setCors(w)
+	var cars[] database.Car
+	queryValues := r.URL.Query()
+	tx := database.DB.Where("1 = 1")
+	//var statusId  uint
+	if strings.TrimSpace(queryValues.Get("statusId")) != ""{
+		//statusId = ParseUint(ps.ByName("statusId"))
+		//tx = tx.Where("status_id = ?",queryValues.Get("statusId"))
+		tx = database.DB.Joins("INNER JOIN car_states on car_states.car_id=cars.id").Joins("INNER JOIN states on states.id=car_states.state_id").Where("states.id = ? AND ? between car_states.begin_date AND car_states.end_date",queryValues.Get("statusId"),time.Now())
+	}
+	//var agencyId uint 		
+	if strings.TrimSpace(queryValues.Get("agencyId")) != "" {
+		//agencyId = ParseUint(ps.ByName("agencyId"))
+		tx = tx.Where("agency_id = ?",queryValues.Get("agencyId"))
+	}
+	//var model 	 string 	
+	if strings.TrimSpace(queryValues.Get("model")) != ""{
+		//model = ps.ByName("model") 
+		tx = tx.Where("model_name = ?",queryValues.Get("model") )
+	} 
+	//var minYear  int
+	if strings.TrimSpace(queryValues.Get("minYear")) != ""{
+		//minYear = ParseInt(ps.ByName("minYear"))
+		tx = tx.Where("year >= ?",queryValues.Get("minYear"))
+	} 
+	//var maxYear  int		
+	if strings.TrimSpace(queryValues.Get("maxYear")) != ""{
+		//maxYear = ParseInt(ps.ByName("maxYear"))
+		tx = tx.Where("year <= ?",queryValues.Get("maxYear"))
+	} 
+
+	//var minPower float32
+	if strings.TrimSpace(queryValues.Get("minPower")) != ""{
+		//minPower = ParseFloat32(ps.ByName("minPower"))
+		tx = tx.Where("power >= ?",queryValues.Get("minPower"))
+	}  
+	//var maxPower float32	
+	if strings.TrimSpace(queryValues.Get("maxPower")) != ""{
+		//maxPower = ParseFloat32(ps.ByName("maxPower"))
+		tx = tx.Where("power <= ?",queryValues.Get("maxPower"))
+	}  
+	//var length 	 int
+	if strings.TrimSpace(queryValues.Get("lengh")) != ""{
+		//length = ParseInt(ps.ByName("lengh"))
+		tx = tx.Where("lenght <= ?",queryValues.Get("lengh"))
+	}
+	//var width 	 int
+	if strings.TrimSpace(queryValues.Get("width")) != ""{
+		//width = ParseInt(ps.ByName("width")) 
+		tx = tx.Where("width <= ?",queryValues.Get("width"))
+	} 
+	//var height 	 int
+	if strings.TrimSpace(queryValues.Get("height")) != ""{
+		//height = ParseInt(ps.ByName("height")) 
+		tx = tx.Where("height <= ?",queryValues.Get("height"))
+	}
+	
+	tx.Find(&cars)
+	res,err := json.Marshal(cars)
+	if err != nil{
+		http.Error(w,err.Error(),500)
+	}
+	w.Write(res)
+}
 func showCarHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	setCors(w)
 	var car database.Car
@@ -285,6 +352,29 @@ func deleteCarHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Para
 	res, err := json.Marshal(deletedCar)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
+	}
+	w.Write(res)
+}
+
+
+func indexCarStateByCarHandler(w http.ResponseWriter,r *http.Request, ps httprouter.Params){
+	setCors(w)
+	var carStates[] database.CarState
+	database.DB.Where("car_id ?",ps.ByName("carId")).Find(&carStates)
+	res,err := json.Marshal(carStates)
+	if err != nil {
+		http.Error(w,err.Error(),500)
+	}
+	w.Write(res)
+}
+
+func indexCarStateByCarAndDateHandler(w http.ResponseWriter,r *http.Request, ps httprouter.Params){
+	setCors(w)
+	var carStates[] database.CarState
+	database.DB.Where("car_id ? AND ? BETWEEN begin_date AND end_date",ps.ByName("carId"),ps.ByName("date")).Find(&carStates)
+	res,err := json.Marshal(carStates)
+	if err != nil {
+		http.Error(w,err.Error(),500)
 	}
 	w.Write(res)
 }
@@ -475,9 +565,9 @@ func setCors(w http.ResponseWriter) {
 }
 
 // Temporary Canary test to make sure Travis-CI is working
-func Canary(word string) string {
+/*func Canary(word string) string {
 	return word
-}
+}*/
 
 func main() {
 	defer database.DB.Close()
@@ -501,7 +591,10 @@ func main() {
 	router.PUT("/user/:userId",updateUserHandler)
 	router.DELETE("/user/:userId",deleteUserHandler)
 	//Car routes
-	router.GET("/car",indexCarHandler)
+	//router.GET("/car",indexCarHandler)
+	router.GET("/car",indexCarByParamsHandler)
+	router.GET("/car/:carId/carstate",indexCarStateByCarHandler)
+	router.GET("/car/:carId/carstate:date",indexCarStateByCarAndDateHandler)
 	router.GET("/car/:carId",showCarHandler)
 	router.POST("/car",createCarHandler)
 	router.PUT("/car/:carId",updateCarHandler)
