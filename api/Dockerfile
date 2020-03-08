@@ -6,7 +6,7 @@ FROM golang
 ARG app_env
 ENV APP_ENV $app_env
 
-# it is okay to leave user/GoDoRP as long as you do not want to share code with other libraries
+# it is okay to leave user/Socopec as long as you do not want to share code with other libraries
 COPY . /go/src/github.com/user/Socopec/api
 WORKDIR /go/src/github.com/user/Socopec/api
 
