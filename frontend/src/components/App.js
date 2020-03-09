@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       windowWidth: window.innerWidth,
       posts: [],
-      errors: [],
+      errors: []
     };
   }
 
@@ -22,15 +22,14 @@ class App extends Component {
   }
 
   getPosts() {
-    axios.get(`${Urls.api}/posts`)
-      .then((res) => {
+    axios
+      .get(`${Urls.api}/posts`)
+      .then(res => {
         this.setState({ posts: res.data });
-      },
-    )
+      })
       .catch(() => {
         this.setState({ errors: ['Backend API connection error'] });
-      },
-    );
+      });
   }
 
   // only removes from frontend not DB
@@ -63,14 +62,14 @@ class App extends Component {
     const panelStyle = {
       width,
       margin: 'auto',
-      marginTop: '65px',
+      marginTop: '65px'
     };
 
     return (
       <div>
         <TopNavbar />
         <Panel style={panelStyle} bsStyle="primary">
-          <h2>Welcome to Your GoDoRP App</h2>
+          <h2>Welcome to Your Socopec App</h2>
           <CreatePostButton addPost={this.addPost.bind(this)} />
           <PostBoard posts={posts} removePost={this.removePost.bind(this)} />
         </Panel>

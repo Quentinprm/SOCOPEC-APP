@@ -1,0 +1,100 @@
+.topnav {
+  margin-bottom: 25px;
+}
+
+#sortBar {
+  width: 300px;
+  float: right;
+}
+
+#searchButton {
+  float: right;
+}
+
+#addButton {
+  margin-bottom: 25px;
+}
+
+#filters {
+  margin: 0 25px;
+  width: 20%;
+}
+
+#filters input {
+  width: 100%;
+  margin: 5px auto;
+}
+
+#filterYear input,
+#filterPower input {
+  width: 50%;
+  margin: auto;
+}
+
+#carslist,
+#filters {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#carslist {
+  width: 70%;
+}
+
+#filters h2 {
+  font-weight: bold;
+  text-align: center;
+}
+
+#filterDimensions input {
+  display: block;
+}
+
+.car {
+  border: 1px solid lightgray;
+  margin-top: 25px;
+  padding: 25px 75px;
+}
+
+img {
+  width: 200px;
+  height: 100px;
+}
+
+.carPict,
+.carInfos {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.carInfos {
+  margin-left: 70px;
+}
+
+.carPict button {
+  display: block;
+  border: none;
+  background-color: white;
+  text-decoration: underline;
+  margin: 5px auto;
+  cursor: pointer;
+}
+
+.carDelete {
+  vertical-align: bottom;
+  margin-left: 70px;
+}
+
+th,
+td {
+  width: 175px;
+}
+
+body {
+  margin-bottom: 20px;
+}
+
+.static-modal input {
+  widows: 50%;
+  margin: 5px auto;
+}

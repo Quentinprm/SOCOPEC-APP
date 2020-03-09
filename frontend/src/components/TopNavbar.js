@@ -1,21 +1,18 @@
 import React from 'react';
+import '../style/topNavBarStyle.css';
 import { Navbar, Nav, NavItem } from 'react-bootstrap/lib';
 
 function TopNavbar() {
   return (
-    <Navbar inverse fixedTop>
-      <Navbar.Header>
-        <Navbar.Brand>
-          <a href="/">GoDoRP</a>
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
-      <Navbar.Collapse>
-        <Nav pullRight>
-          <NavItem href="https://github.com/McMenemy/GoDoRP">GITHUB</NavItem>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+    <div className="topnav">
+      <a className="active" href="/">
+        Socopec.App
+      </a>
+      <a href="/cars">Véhicules</a>
+      <a href="/agents">Agents</a>
+      <a href="/agencies">Agences</a>
+      <a href="/status">Status</a>
+    </div>
   );
 }
 
